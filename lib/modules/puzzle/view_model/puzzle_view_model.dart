@@ -27,8 +27,10 @@ class PuzzleViewModel extends ChangeNotifier {
   }
 
   void updatePuzzleItemCoordinate(int index) {
-    if (_puzzleItemDetails[index].x + 1 == _emptyCoordinate['x'] &&
-        _puzzleItemDetails[index].y == _emptyCoordinate['y']) {
+    final int x = _puzzleItemDetails[index].x;
+    final int y = _puzzleItemDetails[index].y;
+
+    if (x + 1 == _emptyCoordinate['x'] && y == _emptyCoordinate['y']) {
       _puzzleItemDetails[index].x = _emptyCoordinate['x']!;
       _puzzleItemDetails[index].y = _emptyCoordinate['y']!;
     }
