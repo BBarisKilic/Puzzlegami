@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:puzzlegami/modules/puzzle/model/empty_area.dart';
 import 'package:puzzlegami/modules/puzzle/model/puzzle_item_detail.dart';
 
 class PuzzleViewModel extends ChangeNotifier {
   late final List<PuzzleItemDetail> _puzzleItemDetails;
-  late final Map<String, int> _emptyCoordinate;
+  late final EmptyArea _emptyArea;
 
   PuzzleViewModel() {
     _puzzleItemDetails = <PuzzleItemDetail>[];
-    _emptyCoordinate = {'x': 3, 'y': 3};
+    _emptyArea = EmptyArea(3, 3);
     setPuzzleDetails();
   }
 
@@ -27,12 +28,31 @@ class PuzzleViewModel extends ChangeNotifier {
   }
 
   void updatePuzzleItemCoordinate(int index) {
-    final int x = _puzzleItemDetails[index].x;
-    final int y = _puzzleItemDetails[index].y;
+    final int coordinateX = _puzzleItemDetails[index].x;
+    final int coordinateY = _puzzleItemDetails[index].y;
 
-    if (x + 1 == _emptyCoordinate['x'] && y == _emptyCoordinate['y']) {
-      _puzzleItemDetails[index].x = _emptyCoordinate['x']!;
-      _puzzleItemDetails[index].y = _emptyCoordinate['y']!;
+    if (coordinateX + 1 == _emptyArea.x && coordinateY == _emptyArea.y) {
+      _puzzleItemDetails[index].x = _emptyArea.x;
+      _puzzleItemDetails[index].y = _emptyArea.y;
+      _emptyArea.x = coordinateX;
+      _emptyArea.y = coordinateY;
+    } else if (coordinateX - 1 == _emptyArea.x && coordinateY == _emptyArea.y) {
+      _puzzleItemDetails[index].x = _emptyArea.x;
+      _puzzleItemDetails[index].y = _emptyArea.y;
+      _emptyArea.x = coordinateX;
+      _emptyArea.y = coordinateY;
+    } else if (coordinateY + 1 == _emptyArea.y && coordinateX == _emptyArea.x) {
+      _puzzleItemDetails[index].x = _emptyArea.x;
+      _puzzleItemDetails[index].y = _emptyArea.y;
+      _emptyArea.x = coordinateX;
+      _emptyArea.y = coordinateY;
+    } else if (coordinateY - 1 == _emptyArea.y && coordinateX == _emptyArea.x) {
+      _puzzleItemDetails[index].x = _emptyArea.x;
+      _puzzleItemDetails[index].y = _emptyArea.y;
+      _emptyArea.x = coordinateX;
+      _emptyArea.y = coordinateY;
+    } else {
+      return;
     }
   }
 }
