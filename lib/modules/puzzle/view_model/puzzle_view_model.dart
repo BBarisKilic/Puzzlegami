@@ -1,58 +1,62 @@
-import 'package:flutter/material.dart';
-import 'package:puzzlegami/modules/puzzle/model/empty_area.dart';
-import 'package:puzzlegami/modules/puzzle/model/puzzle_item_detail.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PuzzleViewModel extends ChangeNotifier {
-  late final List<PuzzleItemDetail> _puzzleItemDetails;
-  late final EmptyArea _emptyArea;
+import '../../modules.dart';
 
-  PuzzleViewModel() {
-    _puzzleItemDetails = <PuzzleItemDetail>[];
-    _emptyArea = EmptyArea(3, 3);
+class PuzzleViewModel extends StateNotifier<Coordinate> {
+  PuzzleViewModel()
+      : super(Coordinate(
+          puzzleItems: <PuzzleItem>[],
+          emptyArea: EmptyArea(x: 3, y: 3),
+        )) {
     setPuzzleDetails();
-  }
-
-  List<PuzzleItemDetail> get getPuzzleItemDetails => _puzzleItemDetails;
-
-  void redraw() {
-    notifyListeners();
   }
 
   void setPuzzleDetails() {
     for (int x = 0; x < 4; x++) {
       for (int y = 0; y < 4; y++) {
-        _puzzleItemDetails.add(PuzzleItemDetail(x, y));
+        state.puzzleItems.add(PuzzleItem(x: x, y: y));
       }
     }
-    _puzzleItemDetails.removeLast();
+    state.puzzleItems.removeLast();
+
+    final Coordinate newState = state.copy(puzzleItems: state.puzzleItems);
+    state = newState;
   }
 
   void updatePuzzleItemCoordinate(int index) {
-    final int coordinateX = _puzzleItemDetails[index].x;
-    final int coordinateY = _puzzleItemDetails[index].y;
+    final int coordinateX = state.puzzleItems[index].x;
+    final int coordinateY = state.puzzleItems[index].y;
 
-    if (coordinateX + 1 == _emptyArea.x && coordinateY == _emptyArea.y) {
-      _puzzleItemDetails[index].x = _emptyArea.x;
-      _puzzleItemDetails[index].y = _emptyArea.y;
-      _emptyArea.x = coordinateX;
-      _emptyArea.y = coordinateY;
-    } else if (coordinateX - 1 == _emptyArea.x && coordinateY == _emptyArea.y) {
-      _puzzleItemDetails[index].x = _emptyArea.x;
-      _puzzleItemDetails[index].y = _emptyArea.y;
-      _emptyArea.x = coordinateX;
-      _emptyArea.y = coordinateY;
-    } else if (coordinateY + 1 == _emptyArea.y && coordinateX == _emptyArea.x) {
-      _puzzleItemDetails[index].x = _emptyArea.x;
-      _puzzleItemDetails[index].y = _emptyArea.y;
-      _emptyArea.x = coordinateX;
-      _emptyArea.y = coordinateY;
-    } else if (coordinateY - 1 == _emptyArea.y && coordinateX == _emptyArea.x) {
-      _puzzleItemDetails[index].x = _emptyArea.x;
-      _puzzleItemDetails[index].y = _emptyArea.y;
-      _emptyArea.x = coordinateX;
-      _emptyArea.y = coordinateY;
+    if (coordinateX + 1 == state.emptyArea.x &&
+        coordinateY == state.emptyArea.y) {
+      state.puzzleItems[index].x = state.emptyArea.x;
+      state.puzzleItems[index].y = state.emptyArea.y;
+      state.emptyArea.x = coordinateX;
+      state.emptyArea.y = coordinateY;
+    } else if (coordinateX - 1 == state.emptyArea.x &&
+        coordinateY == state.emptyArea.y) {
+      state.puzzleItems[index].x = state.emptyArea.x;
+      state.puzzleItems[index].y = state.emptyArea.y;
+      state.emptyArea.x = coordinateX;
+      state.emptyArea.y = coordinateY;
+    } else if (coordinateY + 1 == state.emptyArea.y &&
+        coordinateX == state.emptyArea.x) {
+      state.puzzleItems[index].x = state.emptyArea.x;
+      state.puzzleItems[index].y = state.emptyArea.y;
+      state.emptyArea.x = coordinateX;
+      state.emptyArea.y = coordinateY;
+    } else if (coordinateY - 1 == state.emptyArea.y &&
+        coordinateX == state.emptyArea.x) {
+      state.puzzleItems[index].x = state.emptyArea.x;
+      state.puzzleItems[index].y = state.emptyArea.y;
+      state.emptyArea.x = coordinateX;
+      state.emptyArea.y = coordinateY;
     } else {
       return;
     }
+
+    final Coordinate newState =
+        state.copy(puzzleItems: state.puzzleItems, emptyArea: state.emptyArea);
+    state = newState;
   }
 }

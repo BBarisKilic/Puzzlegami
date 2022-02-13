@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:puzzlegami/modules/modules.dart';
-import 'package:puzzlegami/modules/puzzle/model/puzzle_item_detail.dart';
+import '../modules/modules.dart';
 
-class PuzzleItem extends StatelessWidget {
-  final PuzzleItemDetail puzzleItemDetail;
+class PuzzleGridItem extends StatelessWidget {
+  final PuzzleItem puzzleItemDetail;
   final Function onTap;
 
-  const PuzzleItem({
+  const PuzzleGridItem({
     Key? key,
     required this.puzzleItemDetail,
     required this.onTap,

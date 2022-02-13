@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:puzzlegami/modules/modules.dart';
-import 'package:puzzlegami/modules/puzzle/model/puzzle_item_detail.dart';
-import 'package:puzzlegami/widgets/widgets.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../modules.dart';
+import '../../../widgets/widgets.dart';
+
+final _puzzleViewModel = StateNotifierProvider<PuzzleViewModel, Coordinate>(
+    (ref) => PuzzleViewModel());
 
 class PuzzleLargeView extends StatelessWidget {
   const PuzzleLargeView({Key? key}) : super(key: key);
@@ -20,10 +22,10 @@ class PuzzleLargeView extends StatelessWidget {
             color: Colors.black,
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Consumer<PuzzleViewModel>(
-            builder: (_, __, ___) => Stack(
+          child: Consumer(
+            builder: (_, ref, ___) => Stack(
               clipBehavior: Clip.none,
-              children: _buildPuzzleItems(context),
+              children: _buildPuzzleItems(ref),
             ),
           ),
         ),
@@ -31,17 +33,16 @@ class PuzzleLargeView extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildPuzzleItems(BuildContext context) {
+  List<Widget> _buildPuzzleItems(WidgetRef ref) {
     final List<Widget> puzzleItems = <Widget>[];
-    final List<PuzzleItemDetail> puzzleItemDetails =
-        context.read<PuzzleViewModel>().getPuzzleItemDetails;
+    final List<PuzzleItem> puzzleItemDetails =
+        ref.watch(_puzzleViewModel).puzzleItems;
 
     for (int i = 0; i < puzzleItemDetails.length; i++) {
-      puzzleItems.add(PuzzleItem(
+      puzzleItems.add(PuzzleGridItem(
           puzzleItemDetail: puzzleItemDetails[i],
           onTap: () {
-            context.read<PuzzleViewModel>().updatePuzzleItemCoordinate(i);
-            context.read<PuzzleViewModel>().redraw();
+            ref.read(_puzzleViewModel.notifier).updatePuzzleItemCoordinate(i);
           }));
     }
 

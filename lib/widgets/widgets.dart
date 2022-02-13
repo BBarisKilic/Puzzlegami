@@ -1,1 +1,1 @@
-export 'puzzle_item.dart';
+export 'puzzle_grid_item.dart';

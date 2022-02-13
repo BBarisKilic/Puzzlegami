@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:puzzlegami/constants/constants.dart';
+import '../../../constants/constants.dart';
 
 /// Represents the layout size passed to [ResponsiveLayoutBuilder.child].
 enum ResponsiveLayoutSize {
