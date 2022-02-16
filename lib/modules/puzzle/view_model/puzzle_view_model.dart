@@ -19,7 +19,7 @@ class PuzzleViewModel extends StateNotifier<Coordinate> {
     }
     state.puzzleItems.removeLast();
 
-    final Coordinate newState = state.copy(puzzleItems: state.puzzleItems);
+    final Coordinate newState = state.copyWith(puzzleItems: state.puzzleItems);
     state = newState;
   }
 
@@ -55,8 +55,8 @@ class PuzzleViewModel extends StateNotifier<Coordinate> {
       return;
     }
 
-    final Coordinate newState =
-        state.copy(puzzleItems: state.puzzleItems, emptyArea: state.emptyArea);
+    final Coordinate newState = state.copyWith(
+        puzzleItems: state.puzzleItems, emptyArea: state.emptyArea);
     state = newState;
   }
 }

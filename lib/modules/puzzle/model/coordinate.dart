@@ -1,3 +1,7 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'coordinate.freezed.dart';
+
 class EmptyArea {
   int x;
   int y;
@@ -12,14 +16,10 @@ class PuzzleItem {
   PuzzleItem({required this.x, required this.y});
 }
 
-class Coordinate {
-  final List<PuzzleItem> puzzleItems;
-  final EmptyArea emptyArea;
-
-  const Coordinate({required this.puzzleItems, required this.emptyArea});
-
-  Coordinate copy({List<PuzzleItem>? puzzleItems, EmptyArea? emptyArea}) =>
-      Coordinate(
-          puzzleItems: puzzleItems ?? this.puzzleItems,
-          emptyArea: emptyArea ?? this.emptyArea);
+@freezed
+class Coordinate with _$Coordinate {
+  const factory Coordinate({
+    required List<PuzzleItem> puzzleItems,
+    required EmptyArea emptyArea,
+  }) = _Coordinate;
 }
