@@ -46,6 +46,8 @@ abstract class $CoordinateCopyWith<$Res> {
           Coordinate value, $Res Function(Coordinate) then) =
       _$CoordinateCopyWithImpl<$Res>;
   $Res call({List<PuzzleItem> puzzleItems, EmptyArea emptyArea});
+
+  $EmptyAreaCopyWith<$Res> get emptyArea;
 }
 
 /// @nodoc
@@ -72,6 +74,13 @@ class _$CoordinateCopyWithImpl<$Res> implements $CoordinateCopyWith<$Res> {
               as EmptyArea,
     ));
   }
+
+  @override
+  $EmptyAreaCopyWith<$Res> get emptyArea {
+    return $EmptyAreaCopyWith<$Res>(_value.emptyArea, (value) {
+      return _then(_value.copyWith(emptyArea: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -81,6 +90,9 @@ abstract class _$CoordinateCopyWith<$Res> implements $CoordinateCopyWith<$Res> {
       __$CoordinateCopyWithImpl<$Res>;
   @override
   $Res call({List<PuzzleItem> puzzleItems, EmptyArea emptyArea});
+
+  @override
+  $EmptyAreaCopyWith<$Res> get emptyArea;
 }
 
 /// @nodoc

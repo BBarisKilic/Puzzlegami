@@ -19,44 +19,66 @@ class PuzzleViewModel extends StateNotifier<Coordinate> {
     }
     state.puzzleItems.removeLast();
 
-    final Coordinate newState = state.copyWith(puzzleItems: state.puzzleItems);
+    final Coordinate newState = state.copyWith();
     state = newState;
   }
 
   void updatePuzzleItemCoordinate(int index) {
-    final int coordinateX = state.puzzleItems[index].x;
-    final int coordinateY = state.puzzleItems[index].y;
+    final int puzzleItemX = state.puzzleItems[index].x;
+    final int puzzleItemY = state.puzzleItems[index].y;
+    final int emptyAreaX = state.emptyArea.x;
+    final int emptyAreaY = state.emptyArea.y;
 
-    if (coordinateX + 1 == state.emptyArea.x &&
-        coordinateY == state.emptyArea.y) {
-      state.puzzleItems[index].x = state.emptyArea.x;
-      state.puzzleItems[index].y = state.emptyArea.y;
-      state.emptyArea.x = coordinateX;
-      state.emptyArea.y = coordinateY;
-    } else if (coordinateX - 1 == state.emptyArea.x &&
-        coordinateY == state.emptyArea.y) {
-      state.puzzleItems[index].x = state.emptyArea.x;
-      state.puzzleItems[index].y = state.emptyArea.y;
-      state.emptyArea.x = coordinateX;
-      state.emptyArea.y = coordinateY;
-    } else if (coordinateY + 1 == state.emptyArea.y &&
-        coordinateX == state.emptyArea.x) {
-      state.puzzleItems[index].x = state.emptyArea.x;
-      state.puzzleItems[index].y = state.emptyArea.y;
-      state.emptyArea.x = coordinateX;
-      state.emptyArea.y = coordinateY;
-    } else if (coordinateY - 1 == state.emptyArea.y &&
-        coordinateX == state.emptyArea.x) {
-      state.puzzleItems[index].x = state.emptyArea.x;
-      state.puzzleItems[index].y = state.emptyArea.y;
-      state.emptyArea.x = coordinateX;
-      state.emptyArea.y = coordinateY;
+    if (puzzleItemX + 1 == emptyAreaX && puzzleItemY == emptyAreaY) {
+      final PuzzleItem puzzleItem =
+          state.puzzleItems[index].copyWith(x: emptyAreaX, y: emptyAreaY);
+      final EmptyArea emptyArea =
+          state.emptyArea.copyWith(x: puzzleItemX, y: puzzleItemY);
+      final List<PuzzleItem> statePuzzleItems = state.puzzleItems;
+      statePuzzleItems[index] = puzzleItem;
+
+      final Coordinate newState =
+          state.copyWith(emptyArea: emptyArea, puzzleItems: statePuzzleItems);
+
+      state = newState;
+    } else if (puzzleItemX - 1 == emptyAreaX && puzzleItemY == emptyAreaY) {
+      final PuzzleItem puzzleItem =
+          state.puzzleItems[index].copyWith(x: emptyAreaX, y: emptyAreaY);
+      final EmptyArea emptyArea =
+          state.emptyArea.copyWith(x: puzzleItemX, y: puzzleItemY);
+      final List<PuzzleItem> statePuzzleItems = state.puzzleItems;
+      statePuzzleItems[index] = puzzleItem;
+
+      final Coordinate newState =
+          state.copyWith(emptyArea: emptyArea, puzzleItems: statePuzzleItems);
+
+      state = newState;
+    } else if (puzzleItemY + 1 == emptyAreaY && puzzleItemX == emptyAreaX) {
+      final PuzzleItem puzzleItem =
+          state.puzzleItems[index].copyWith(x: emptyAreaX, y: emptyAreaY);
+      final EmptyArea emptyArea =
+          state.emptyArea.copyWith(x: puzzleItemX, y: puzzleItemY);
+      final List<PuzzleItem> statePuzzleItems = state.puzzleItems;
+      statePuzzleItems[index] = puzzleItem;
+
+      final Coordinate newState =
+          state.copyWith(emptyArea: emptyArea, puzzleItems: statePuzzleItems);
+
+      state = newState;
+    } else if (puzzleItemY - 1 == emptyAreaY && puzzleItemX == emptyAreaX) {
+      final PuzzleItem puzzleItem =
+          state.puzzleItems[index].copyWith(x: emptyAreaX, y: emptyAreaY);
+      final EmptyArea emptyArea =
+          state.emptyArea.copyWith(x: puzzleItemX, y: puzzleItemY);
+      final List<PuzzleItem> statePuzzleItems = state.puzzleItems;
+      statePuzzleItems[index] = puzzleItem;
+
+      final Coordinate newState =
+          state.copyWith(emptyArea: emptyArea, puzzleItems: statePuzzleItems);
+
+      state = newState;
     } else {
       return;
     }
-
-    final Coordinate newState = state.copyWith(
-        puzzleItems: state.puzzleItems, emptyArea: state.emptyArea);
-    state = newState;
   }
 }
