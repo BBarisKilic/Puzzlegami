@@ -4,9 +4,10 @@ import '../../modules.dart';
 
 class PuzzleViewModel extends StateNotifier<Coordinate> {
   PuzzleViewModel()
+      // ignore: prefer_const_constructors
       : super(Coordinate(
           puzzleItems: <PuzzleItem>[],
-          emptyArea: EmptyArea(x: 3, y: 3),
+          emptyArea: const EmptyArea(x: 3, y: 3),
         )) {
     setPuzzleDetails();
   }
@@ -18,9 +19,6 @@ class PuzzleViewModel extends StateNotifier<Coordinate> {
       }
     }
     state.puzzleItems.removeLast();
-
-    final Coordinate newState = state.copyWith();
-    state = newState;
   }
 
   void updatePuzzleItemCoordinate(int index) {
@@ -37,10 +35,8 @@ class PuzzleViewModel extends StateNotifier<Coordinate> {
       final List<PuzzleItem> statePuzzleItems = state.puzzleItems;
       statePuzzleItems[index] = puzzleItem;
 
-      final Coordinate newState =
+      state =
           state.copyWith(emptyArea: emptyArea, puzzleItems: statePuzzleItems);
-
-      state = newState;
     } else if (puzzleItemX - 1 == emptyAreaX && puzzleItemY == emptyAreaY) {
       final PuzzleItem puzzleItem =
           state.puzzleItems[index].copyWith(x: emptyAreaX, y: emptyAreaY);
@@ -49,10 +45,8 @@ class PuzzleViewModel extends StateNotifier<Coordinate> {
       final List<PuzzleItem> statePuzzleItems = state.puzzleItems;
       statePuzzleItems[index] = puzzleItem;
 
-      final Coordinate newState =
+      state =
           state.copyWith(emptyArea: emptyArea, puzzleItems: statePuzzleItems);
-
-      state = newState;
     } else if (puzzleItemY + 1 == emptyAreaY && puzzleItemX == emptyAreaX) {
       final PuzzleItem puzzleItem =
           state.puzzleItems[index].copyWith(x: emptyAreaX, y: emptyAreaY);
@@ -61,10 +55,8 @@ class PuzzleViewModel extends StateNotifier<Coordinate> {
       final List<PuzzleItem> statePuzzleItems = state.puzzleItems;
       statePuzzleItems[index] = puzzleItem;
 
-      final Coordinate newState =
+      state =
           state.copyWith(emptyArea: emptyArea, puzzleItems: statePuzzleItems);
-
-      state = newState;
     } else if (puzzleItemY - 1 == emptyAreaY && puzzleItemX == emptyAreaX) {
       final PuzzleItem puzzleItem =
           state.puzzleItems[index].copyWith(x: emptyAreaX, y: emptyAreaY);
@@ -73,10 +65,8 @@ class PuzzleViewModel extends StateNotifier<Coordinate> {
       final List<PuzzleItem> statePuzzleItems = state.puzzleItems;
       statePuzzleItems[index] = puzzleItem;
 
-      final Coordinate newState =
+      state =
           state.copyWith(emptyArea: emptyArea, puzzleItems: statePuzzleItems);
-
-      state = newState;
     } else {
       return;
     }

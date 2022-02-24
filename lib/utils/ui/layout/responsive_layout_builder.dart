@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../constants/constants.dart';
 
 /// Represents the layout size passed to [ResponsiveLayoutBuilder.child].
